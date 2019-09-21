@@ -1,4 +1,4 @@
-# Kubernetes cluster using Terraform and Openstack
+# Openstack VM using Terraform
 
 ### Install on Mac
 ```shell
