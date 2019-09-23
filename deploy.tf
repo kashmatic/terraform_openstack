@@ -61,15 +61,14 @@ resource "openstack_compute_instance_v2" "kashi-kube-terraform" {
     name = "${var.openstack_network}"
   }
 
-  # provisioner "file" {
-  #   source      = "install_nginx.sh"
-  #   destination = "/tmp/install_nginx.sh"
-  # }
-  #
-  # provisioner "remote-exec" {
-  #   inline = [
-  #     "chmod +x /tmp/install_nginx.sh",
-  #     "/tmp/install_nginx.sh args",
-  #   ]
-  # }
+}
+
+resource "openstack_blockstorage_volume_v2" "kashi_volume_1" {
+  name = "kashi_volume_1"
+  size = 100
+}
+
+resource "openstack_blockstorage_volume_attach_v2" "kashi_volume_1_attachment" {
+  volume_id = "${openstack_blockstorage_volume_v2.kashi_volume_1.id}"
+  host_name = "${openstack_compute_instance_v2.kashi-kube-terraform.name}"
 }

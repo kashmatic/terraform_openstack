@@ -24,6 +24,6 @@ myvars.tfvars ## provide values
 terraform init
 terraform plan -var-file=myvars.tfvars
 terraform apply -var-file=myvars.tfvars
-terraform show
-terraform destroy
+terraform show -var-file=myvars.tfvars
+terraform destroy -var-file=myvars.tfvars
 ```
