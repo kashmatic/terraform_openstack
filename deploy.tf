@@ -66,9 +66,14 @@ resource "openstack_compute_instance_v2" "kashi-kube-terraform" {
 resource "openstack_blockstorage_volume_v2" "kashi_volume_1" {
   name = "kashi_volume_1"
   size = 100
+
+  depends_on = [openstack_compute_instance_v2.kashi-kube-terraform]
 }
 
-resource "openstack_blockstorage_volume_attach_v2" "kashi_volume_1_attachment" {
-  volume_id = "${openstack_blockstorage_volume_v2.kashi_volume_1.id}"
-  host_name = "${openstack_compute_instance_v2.kashi-kube-terraform.name}"
+resource "openstack_compute_volume_attach_v2" "kashi_volume_1_attachment" {
+  instance_id = "${openstack_compute_instance_v2.kashi-kube-terraform.id}"
+  volume_id   = "${openstack_blockstorage_volume_v2.kashi_volume_1.id}"
+  device      = "/dev/vdb"
+
+  depends_on = [openstack_compute_instance_v2.kashi-kube-terraform, openstack_blockstorage_volume_v2.kashi_volume_1]
 }
